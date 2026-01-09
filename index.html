@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen Seya XMD | Official WhatsApp Bot Platform</title>
+    <meta name="description" content="Experience the most advanced WhatsApp automation bot with AI-powered features, enterprise security, and lightning-fast performance.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --dark: #0f172a;
+            --darker: #020617;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--darker);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* Advanced Background System */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #4c1d95 50%, #701a75 75%, #831843 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 25s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .gradient-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: orbFloat 30s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, #6366f1, transparent);
+            top: -15%;
+            left: -10%;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #8b5cf6, transparent);
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -10s;
+        }
+
+        .orb-3 {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, #ec4899, transparent);
+            top: 40%;
+            left: 50%;
+            animation-delay: -20s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(120px, -120px) scale(1.15) rotate(120deg); }
+            66% { transform: translate(-120px, 120px) scale(0.85) rotate(240deg); }
+        }
+
+        /* Floating Controls */
+        .floating-controls {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            padding: 2px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .control-btn:hover::before {
+            opacity: 1;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+        }
+
+        .control-btn svg {
+            width: 26px;
+            height: 26px;
+            fill: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .control-btn:hover svg {
+            transform: scale(1.1);
+        }
+
+        .control-btn.active {
+            background: rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        /* Share Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.98), rgba(49, 46, 129, 0.98));
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 50px;
+            max-width: 550px;
+            width: 90%;
+            animation: modalSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes modalSlideUp {
+            from { transform: translateY(100px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .modal-header h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-header p {
+            color: #94a3b8;
+            font-size: 15px;
+        }
+
+        .share-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .share-item {
+            padding: 24px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .share-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .share-item:hover::before {
+            opacity: 1;
+        }
+
+        .share-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .share-item-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .share-item:hover .share-item-icon {
+            transform: scale(1.15);
+        }
+
+        .share-item-text {
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-close {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.02);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 120px 0 80px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: #a5b4fc;
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+        }
+
+        .hero-title {
+            font-size: clamp(42px, 9vw, 92px);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 28px;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 50%, #fff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -3px;
+            animation: titleShine 4s ease-in-out infinite;
+        }
+
+        @keyframes titleShine {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 3.5vw, 26px);
+            color: #cbd5e1;
+            margin-bottom: 45px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 80px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 42px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 12px 45px rgba(99, 102, 241, 0.45);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .hero-cta:hover::before {
+            left: 100%;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.6);
+        }
+
+        .hero-cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 42px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .hero-cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .stat-card {
+            padding: 35px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 52px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 17px;
+            color: #94a3b8;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 140px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 90px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 10px 24px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #c4b5fd;
+        }
+
+        .section-title {
+            font-size: clamp(38px, 7vw, 62px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #c4b5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
+
+        .section-subtitle {
+            font-size: 21px;
+            color: #94a3b8;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 35px;
+        }
+
+        .feature-card {
+            padding: 45px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1), transparent 70%);
+            opacity: 0;
+            transition: all 0.6s ease;
+            transform: scale(0);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 52px;
+            margin-bottom: 28px;
+            display: block;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-description {
+            font-size: 16px;
+            color: #94a3b8;
+            line-height: 1.75;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* About Section */
+        .about {
+            padding: 140px 0;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 850px;
+            margin: 0 auto 70px;
+            font-size: 21px;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .owner-card {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(35px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .owner-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .owner-card:hover::before {
+            left: 100%;
+        }
+
+        .owner-card:hover {
+            transform: translateY(-12px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .owner-avatar {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            margin: 0 auto 28px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .owner-name {
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .owner-role {
+            font-size: 17px;
+            color: #94a3b8;
+            margin-bottom: 35px;
+            font-weight: 600;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(99, 102, 241, 0.5);
+            transform: translateX(8px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 140px 0;
+            text-align: center;
+        }
+
+        .cta-box {
+            padding: 90px 50px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(236, 72, 153, 0.12));
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.15), transparent 60%),
+                        radial-gradient(circle at 70% 50%, rgba(236, 72, 153, 0.15), transparent 60%);
+        }
+
+        .cta-title {
+            font-size: clamp(34px, 6vw, 52px);
+            font-weight: 900;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-text {
+            font-size: 22px;
+            color: #94a3b8;
+            margin-bottom: 45px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 70px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-text {
+            color: #64748b;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .footer-credits {
+            color: #475569;
+            font-size: 15px;
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+            z-index: 9999;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 28px;
+            right: 28px;
+            padding: 18px 28px;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 14px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 15px;
+            z-index: 3000;
+            transform: translateX(500px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .floating-controls {
+                bottom: 24px;
+                right: 24px;
+            }
+
+            .control-btn {
+                width: 56px;
+                height: 56px;
+            }
+
+            .share-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                padding: 35px;
+            }
+
+            .feature-card, .stat-card, .owner-card {
+                padding: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Background -->
+    <div class="bg-animated"></div>
+    <div class="stars" id="stars"></div>
+    <div class="gradient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Floating Controls -->
+    <div class="floating-controls">
+        <div class="control-btn" id="musicBtn" title="Toggle Music (M)">
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        </div>
+        <div class="control-btn" id="shareBtn" title="Share (S)">
+            <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal" id="shareModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✨ Share Queen Seya XMD</h3>
+                <p>Spread the word about this amazing bot!</p>
+            </div>
+            <div class="share-grid">
+                <div class="share-item" onclick="shareOn('whatsapp')">
+                    <div class="share-item-icon">💬</div>
+                    <div class="share-item-text">WhatsApp</div>
+                </div>
+                <div class="share-item" onclick="shareOn('facebook')">
+                    <div class="share-item-icon">📘</div>
+                    <div class="share-item-text">Facebook</div>
+                </div>
+                <div class="share-item" onclick="shareOn('twitter')">
+                    <div class="share-item-icon">🐦</div>
+                    <div class="share-item-text">Twitter</div>
+                </div>
+                <div class="share-item" onclick="shareOn('telegram')">
+                    <div class="share-item-icon">✈️</div>
+                    <div class="share-item-text">Telegram</div>
+                </div>
+                <div class="share-item" onclick="shareOn('linkedin')">
+                    <div class="share-item-icon">💼</div>
+                    <div class="share-item-text">LinkedIn</div>
+                </div>
+                <div class="share-item" onclick="copyLink()">
+                    <div class="share-item-icon">🔗</div>
+                    <div class="share-item-text">Copy Link</div>
+                </div>
+            </div>
+            <button class="btn-close" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>👑</span>
+                    <span>Official WhatsApp Bot Platform</span>
+                </div>
+                <h1 class="hero-title">Queen Seya XMD</h1>
+                <p class="hero-subtitle">Experience the most advanced WhatsApp automation bot with AI-powered intelligence, enterprise-grade security, and lightning-fast performance.</p>
+                
+                <div class="hero-buttons">
+                    <a href="https://seya-mini-afeabe8ee8b3.herokuapp.com/" target="_blank" rel="noopener noreferrer" class="hero-cta">
+                        <span>Cnnect Bot</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
+                        </svg>
+                    </a>
+                    <a href="#contact" class="hero-cta-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        <span>Contact Us</span>
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Always Online</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Premium Features</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime Guarantee</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">✨ Features</div>
+                <h2 class="section-title">Powerful Capabilities</h2>
+                <p class="section-subtitle">Everything you need to automate and enhance your WhatsApp experience with cutting-edge technology</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🤖</span>
+                    <h3 class="feature-title">AI-Powered Intelligence</h3>
+                    <p class="feature-description">Advanced artificial intelligence for smart responses, natural conversations, and automated task handling with machine learning capabilities.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">Optimized performance with instant response times and seamless real-time interactions for the best user experience.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🔒</span>
+                    <h3 class="feature-title">Enterprise Security</h3>
+                    <p class="feature-description">Bank-level encryption and advanced security protocols to protect your data, privacy, and communications.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🎨</span>
+                    <h3 class="feature-title">Rich Media Support</h3>
+                    <p class="feature-description">Process and download images, videos, audio files, and documents effortlessly with advanced media handling.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🌐</span>
+                    <h3 class="feature-title">Multi-Language</h3>
+                    <p class="feature-description">Communicate seamlessly in multiple languages with automatic translation capabilities and global reach.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🎮</span>
+                    <h3 class="feature-title">Entertainment Hub</h3>
+                    <p class="feature-description">Interactive games, music features, and entertainment commands for engaging and fun experiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">ℹ️ About</div>
+                <h2 class="section-title">Meet Queen Seya XMD</h2>
+            </div>
+            
+            <p class="about-content">
+                Queen Seya XMD represents the pinnacle of WhatsApp automation technology. Built with cutting-edge AI and designed for both personal and group chat management, it delivers an unparalleled messaging experience with intelligent features, robust security, and lightning-fast performance. Join thousands of satisfied users worldwide.
+            </p>
+            
+            <div class="owner-card">
+                <div class="owner-avatar">👨‍💻</div>
+                <h3 class="owner-name">Pamudina Ravihara</h3>
+                <p class="owner-role">Lead Developer & Bot Owner</p>
+                <div class="contact-links">
+                    <a href="tel:+94778430626" class="contact-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <span>+94 77 843 0626</span>
+                    </a>
+                    <a href="https://wa.me/94778430626" class="contact-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        <span>WhatsApp Chat</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <div class="cta-box">
+                <h2 class="cta-title">Ready to Get Started?</h2>
+                <p class="cta-text">Join thousands of users experiencing the power of Queen Seya XMD today</p>
+                <a href="https://wa.me/94778430626?text=Hi%2C%20I%20want%20to%20know%20more%20about%20Queen%20Seya%20XMD%20bot" target="_blank" rel="noopener noreferrer" class="hero-cta">
+                    <span>Contact Owner</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">&copy; 2026 Queen Seya XMD. All rights reserved.</p>
+            <p class="footer-credits">Developed with ❤️ by Pamudina Ravihara</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script>
+        // Create Stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Music System
+        let musicPlaying = false;
+        let synth, pattern;
+
+        async function initMusic() {
+            await Tone.start();
+            
+            synth = new Tone.PolySynth(Tone.Synth, {
+                oscillator: { type: 'sine' },
+                envelope: { attack: 2, decay: 1, sustain: 0.5, release: 3 }
+            }).toDestination();
+            
+            synth.volume.value = -12;
+            
+            const chords = [
+                ['C4', 'E4', 'G4'],
+                ['A3', 'C4', 'E4'],
+                ['F3', 'A3', 'C4'],
+                ['G3', 'B3', 'D4']
+            ];
+            
+            let chordIndex = 0;
+            pattern = new Tone.Loop((time) => {
+                synth.triggerAttackRelease(chords[chordIndex], '4n', time);
+                chordIndex = (chordIndex + 1) % chords.length;
+            }, '2n');
+            
+            return pattern;
+        }
+
+        const musicBtn = document.getElementById('musicBtn');
+        musicBtn.addEventListener('click', async function() {
+            if (!synth) {
+                pattern = await initMusic();
+            }
+            
+            if (!musicPlaying) {
+                Tone.Transport.start();
+                pattern.start(0);
+                this.classList.add('active');
+                musicPlaying = true;
+                showNotification('🎵 Music is now playing');
+            } else {
+                pattern.stop();
+                Tone.Transport.stop();
+                this.classList.remove('active');
+                musicPlaying = false;
+                showNotification('🔇 Music stopped');
+            }
+        });
+
+        // Share Modal
+        const shareModal = document.getElementById('shareModal');
+        const shareBtn = document.getElementById('shareBtn');
+
+        shareBtn.addEventListener('click', () => {
+            shareModal.classList.add('active');
+        });
+
+        function closeModal() {
+            shareModal.classList.remove('active');
+        }
+
+        shareModal.addEventListener('click', (e) => {
+            if (e.target === shareModal) closeModal();
+        });
+
+        function shareOn(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Check out Queen Seya XMD - The Ultimate WhatsApp Bot! 👑');
+            
+            const urls = {
+                whatsapp: `https://wa.me/?text=${text}%20${url}`,
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+                twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+                telegram: `https://t.me/share/url?url=${url}&text=${text}`,
+                linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+            };
+            
+            if (urls[platform]) {
+                window.open(urls[platform], '_blank', 'width=600,height=500');
+                showNotification(`✅ Opening ${platform.charAt(0).toUpperCase() + platform.slice(1)}...`);
+            }
+        }
+
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification('✅ Link copied to clipboard!');
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = url;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                showNotification('✅ Link copied successfully!');
+            });
+        }
+
+        // Notification System
+        function showNotification(message) {
+            const notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 3500);
+        }
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if ((e.key === 'm' || e.key === 'M') && !e.ctrlKey && !e.altKey) {
+                musicBtn.click();
+            }
+            if ((e.key === 's' || e.key === 'S') && !e.ctrlKey && !e.altKey) {
+                if (!shareModal.classList.contains('active')) {
+                    shareBtn.click();
+                }
+            }
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Animate on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .stat-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(40px)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        });
+
+        // Welcome Message
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                showNotification('👑 Welcome to Queen Seya XMD!');
+            }, 1000);
+            
+            setTimeout(() => {
+                showNotification('💡 Press M for music • S to share');
+            }, 5000);
+        });
+
+        // Add ripple effect
+        document.querySelectorAll('.hero-cta, .hero-cta-secondary, .contact-link, .share-item').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    left: ${x}px;
+                    top: ${y}px;
+                    transform: scale(0);
+                    animation: ripple 0.6s ease-out;
+                    pointer-events: none;
+                `;
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to { transform: scale(2.5); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
