@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen Seya XMD - Official</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #000000;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: radial-gradient(ellipse at top, #2d0a4e 0%, #000000 50%),
+                        radial-gradient(ellipse at bottom, #1a0033 0%, #000000 50%);
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(218, 112, 214, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(218, 112, 214, 0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            z-index: 0;
+            animation: orbFloat 25s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #da70d6, transparent);
+            top: -300px;
+            left: -300px;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ff1493, transparent);
+            bottom: -250px;
+            right: -250px;
+            animation-delay: 8s;
+        }
+
+        .orb3 {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, #ba55d3, transparent);
+            top: 50%;
+            right: -275px;
+            animation-delay: 16s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-180px, 120px) scale(1.15); }
+            66% { transform: translate(120px, -120px) scale(0.85); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px 50px;
+            perspective: 1000px;
+        }
+
+        .crown-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: crownFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(218, 112, 214, 0.8));
+        }
+
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .neon-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            background: linear-gradient(45deg, #ff1493, #da70d6, #ba55d3, #ff1493);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 4s ease infinite, titleFloat 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 50px rgba(255, 20, 147, 0.9))
+                    drop-shadow(0 0 100px rgba(218, 112, 214, 0.5));
+            transform-style: preserve-3d;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateX(2deg); }
+        }
+
+        .subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8em;
+            background: linear-gradient(45deg, #da70d6, #ff1493);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 3s ease infinite;
+            margin-top: 25px;
+            filter: drop-shadow(0 0 25px rgba(218, 112, 214, 0.7));
+            font-weight: 600;
+            letter-spacing: 3px;
+        }
+
+        .owner-box {
+            background: linear-gradient(135deg, 
+                rgba(218, 112, 214, 0.06), 
+                rgba(255, 20, 147, 0.06));
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 25px 35px;
+            margin: 50px auto;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+        }
+
+        .owner-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(45deg, #ff1493, #da70d6, #ba55d3, #ff1493);
+            background-size: 400% 400%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderFlow 5s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes borderFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .owner-box:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(255, 20, 147, 0.4),
+                0 20px 60px rgba(218, 112, 214, 0.3);
+        }
+
+        .owner-box h2 {
+            color: #da70d6;
+            font-size: 1.6em;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 25px rgba(218, 112, 214, 0.8);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .owner-detail {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 12px 0;
+            font-size: 1.1em;
+            padding: 10px 15px;
+            background: rgba(218, 112, 214, 0.05);
+            border-radius: 10px;
+            border-left: 3px solid #ff1493;
+            transition: all 0.3s ease;
+        }
+
+        .owner-detail:hover {
+            background: rgba(218, 112, 214, 0.12);
+            transform: translateX(8px);
+            border-left-color: #da70d6;
+        }
+
+        .owner-detail strong {
+            color: #ff1493;
+            margin-right: 15px;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+            font-weight: 600;
+        }
+
+        .owner-detail span {
+            color: #f5d9f5;
+            font-weight: 400;
+        }
+
+        .action-boxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 80px 0;
+        }
+
+        .action-box {
+            background: linear-gradient(135deg, 
+                rgba(218, 112, 214, 0.08), 
+                rgba(255, 20, 147, 0.08));
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .action-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 25px;
+            padding: 2px;
+            background: linear-gradient(45deg, #da70d6, #ff1493);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .action-box:hover::before {
+            opacity: 1;
+        }
+
+        .action-box:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 
+                0 30px 65px rgba(255, 20, 147, 0.5),
+                0 30px 65px rgba(218, 112, 214, 0.3);
+        }
+
+        .action-box h3 {
+            color: #da70d6;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(218, 112, 214, 0.6);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+
+        .action-box p {
+            color: #e6cce6;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .btn {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #ff1493, #da70d6, #ff1493);
+            background-size: 200% 200%;
+            color: #fff;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 700;
+            box-shadow: 
+                0 0 35px rgba(255, 20, 147, 0.6),
+                0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .btn:hover {
+            background-position: 100% 0;
+            box-shadow: 
+                0 0 50px rgba(218, 112, 214, 0.9),
+                0 15px 35px rgba(0, 0, 0, 0.6);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #da70d6, #ba55d3, #da70d6);
+            background-size: 200% 200%;
+        }
+
+        .bot-pair-section {
+            text-align: center;
+            margin: 90px 0;
+            padding: 60px;
+            background: linear-gradient(135deg, 
+                rgba(218, 112, 214, 0.08), 
+                rgba(255, 20, 147, 0.08));
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bot-pair-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(45deg, #ff1493, #da70d6, #ba55d3, #ff1493);
+            background-size: 400% 400%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderFlow 5s ease infinite;
+            z-index: -1;
+        }
+
+        .bot-pair-section h2 {
+            color: #da70d6;
+            font-size: 3em;
+            margin-bottom: 25px;
+            text-shadow: 0 0 35px rgba(218, 112, 214, 0.8);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+        }
+
+        .bot-pair-section p {
+            color: #e6cce6;
+            font-size: 1.3em;
+            margin: 25px 0;
+            line-height: 1.7;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            background: linear-gradient(135deg, rgba(10, 0, 20, 0.7), rgba(26, 0, 51, 0.5));
+            border-top: 2px solid transparent;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff1493, #da70d6, #ba55d3, #ff1493);
+            background-size: 200% 200%;
+            animation: gradientFlow 4s ease infinite;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff1493, #da70d6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+        }
+
+        .footer p {
+            color: #da70d6;
+            font-size: 0.95em;
+            margin: 8px 0;
+            font-weight: 500;
+        }
+
+        .footer-tagline {
+            color: #ff1493;
+            font-weight: 700;
+            font-size: 1.1em;
+            text-shadow: 
+                0 0 20px rgba(255, 20, 147, 0.8),
+                0 0 40px rgba(255, 20, 147, 0.4);
+            margin-top: 15px;
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-links {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #da70d6;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            color: #ff1493;
+            text-shadow: 0 0 15px rgba(255, 20, 147, 0.8);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #0a0015, #2d0a4e);
+            padding: 50px;
+            border-radius: 30px;
+            border: 2px solid transparent;
+            text-align: center;
+            max-width: 650px;
+            position: relative;
+            animation: modalSlideIn 0.6s ease;
+            box-shadow: 0 0 70px rgba(255, 20, 147, 0.5);
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(45deg, #ff1493, #da70d6, #ba55d3, #ff1493);
+            background-size: 400% 400%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderFlow 5s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-80px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-content h2 {
+            color: #da70d6;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            text-shadow: 0 0 35px rgba(218, 112, 214, 0.8);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+        }
+
+        .modal-content p {
+            color: #e6cce6;
+            font-size: 1.2em;
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        .feature-item {
+            margin: 30px 0;
+        }
+
+        .feature-item h3 {
+            margin: 20px 0;
+            font-size: 1.6em;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .feature-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item li {
+            padding: 14px 20px;
+            margin: 10px 0;
+            background: rgba(218, 112, 214, 0.1);
+            border-radius: 10px;
+            border-left: 3px solid #ff1493;
+            transition: all 0.3s ease;
+            color: #e6cce6;
+            font-size: 1.05em;
+        }
+
+        .feature-item li:hover {
+            background: rgba(218, 112, 214, 0.2);
+            transform: translateX(10px);
+            border-left-color: #da70d6;
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .neon-title {
+                font-size: 3em;
+                letter-spacing: 3px;
+            }
+            
+            .subtitle {
+                font-size: 1.4em;
+            }
+            
+            .action-boxes {
+                grid-template-columns: 1fr;
+            }
+
+            .owner-box {
+                padding: 20px 25px;
+            }
+
+            header {
+                padding: 50px 20px 30px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .bot-pair-section {
+                padding: 40px 25px;
+            }
+
+            .modal-content {
+                padding: 35px 25px;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="stars" id="stars"></div>
+        <div class="grid-overlay"></div>
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="crown-icon">👑</div>
+            <h1 class="neon-title">QUEEN SEYA XMD</h1>
+            <p class="subtitle">Royal WhatsApp Bot Experience</p>
+        </header>
+
+        <div class="owner-box">
+            <h2>👤 Owner</h2>
+            <div class="owner-detail">
+                <strong>Name:</strong>
+                <span>Pamudina Ravihara</span>
+            </div>
+            <div class="owner-detail">
+                <strong>Town:</strong>
+                <span>Mathara</span>
+            </div>
+            <div class="owner-detail">
+                <strong>Contact:</strong>
+                <span>0778430626</span>
+            </div>
+        </div>
+
+        <div class="action-boxes">
+            <div class="action-box" onclick="openWhatsAppChannel()">
+                <h3>📱 WhatsApp Channel</h3>
+                <p>Join our royal WhatsApp channel for exclusive updates</p>
+                <button class="btn">Follow Now</button>
+            </div>
+
+            <div class="action-box" onclick="showBotDetails()">
+                <h3>🤖 Bot Features</h3>
+                <p>Discover the powerful features of Queen Seya XMD</p>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+
+            <div class="action-box" onclick="contactOwner()">
+                <h3>📞 Contact Owner</h3>
+                <p>Reach out for support and inquiries</p>
+                <button class="btn">Contact Now</button>
+            </div>
+        </div>
+
+        <div class="bot-pair-section">
+            <h2>🔗 Connect Your Bot</h2>
+            <p>Pair your WhatsApp with Queen Seya XMD and experience royal features</p>
+            <a href="https://seya-mini-afeabe8ee8b3.herokuapp.com/" target="_blank" class="btn" style="font-size: 1.4em; padding: 22px 60px; margin-top: 20px;">
+                👑 PAIR BOT NOW
+            </a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">👑 QUEEN SEYA XMD</div>
+            <p>Advanced WhatsApp Bot Platform</p>
+            <div class="footer-links">
+                <a href="#" onclick="openWhatsAppChannel(); return false;">WhatsApp Channel</a>
+                <a href="#" onclick="contactOwner(); return false;">Contact</a>
+                <a href="#" onclick="showBotDetails(); return false;">Features</a>
+            </div>
+            <p style="margin-top: 15px;">© Pamudina Ravihara 2026</p>
+            <p class="footer-tagline">DARK TECH ZONE</p>
+        </div>
+    </footer>
+
+    <div id="followModal" class="modal">
+        <div class="modal-content">
+            <h2>⚠️ Important Notice</h2>
+            <p>Please follow our WhatsApp channel before accessing the bot pairing page!</p>
+            <button class="btn" onclick="openWhatsAppChannel()">Follow WhatsApp Channel</button>
+            <br><br>
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <div id="botDetailsModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <h2>👑 QUEEN SEYA XMD - Bot Features</h2>
+            <div style="text-align: left; margin: 25px 0;">
+                <div class="feature-item">
+                    <h3 style="color: #da70d6;">⚡ Core Features:</h3>
+                    <ul>
+                        <li>🎵 Music & Video Downloader</li>
+                        <li>🖼️ Sticker Maker & Converter</li>
+                        <li>🔍 AI-Powered Search</li>
+                        <li>📰 News & Updates</li>
+                        <li>🎮 Fun Games & Entertainment</li>
+                    </ul>
+                </div>
+                <div class="feature-item">
+                    <h3 style="color: #ff1493;">🛠️ Admin Tools:</h3>
+                    <ul>
+                        <li>👥 Group Management</li>
+                        <li>🚫 Auto-Moderation</li>
+                        <li>📊 Analytics & Stats</li>
+                        <li>⚙️ Custom Commands</li>
+                        <li>🔒 Security Features</li>
+                    </ul>
+                </div>
+                <div class="feature-item">
+                    <h3 style="color: #da70d6;">🌟 Premium Features:</h3>
+                    <ul>
+                        <li>🤖 ChatGPT Integration</li>
+                        <li>🎨 AI Image Generation</li>
+                        <li>📝 Text to Speech</li>
+                        <li>🌐 Multi-Language Support</li>
+                        <li>⚡ 24/7 Active Support</li>
+                    </ul>
+                </div>
+                <div style="background: rgba(218, 112, 214, 0.15); padding: 20px; border-radius: 15px; margin-top: 25px; border: 2px solid #ff1493;">
+                    <p style="color: #da70d6; font-weight: bold; text-align: center; font-size: 1.2em;">
+                        ✨ Royal, Fast & Reliable! ✨
+                    </p>
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="closeBotDetails()">Close</button>
+            <button class="btn" onclick="closeBotDetails(); setTimeout(function(){ window.open('https://seya-mini-afeabe8ee8b3.herokuapp.com/', '_blank'); }, 300);">Pair Bot Now</button>
+        </div>
+    </div>
+
+    <script>
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = Math.random() * 3 + 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        function openWhatsAppChannel() {
+            sessionStorage.setItem('channelFollowed', 'true');
+            window.open('https://whatsapp.com/channel/0029Vb74ZB01iUxQUT4A8P2b', '_blank');
+        }
+
+        function contactOwner() {
+            window.open('https://wa.me/94778430626', '_blank');
+        }
+
+        window.onload = function() {
+            const visited = sessionStorage.getItem('channelFollowed');
+            if (!visited) {
+                setTimeout(() => {
+                    document.getElementById('followModal').style.display = 'flex';
+                }, 1200);
+            }
+        };
+
+        function closeModal() {
+            document.getElementById('followModal').style.display = 'none';
+        }
+
+        function showBotDetails() {
+            document.getElementById('botDetailsModal').style.display = 'flex';
+        }
+
+        function closeBotDetails() {
+            document.getElementById('botDetailsModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const pairLink = document.querySelector('a[href*="herokuapp.com"]');
+            if (pairLink) {
+                pairLink.addEventListener('click', function(e) {
+                    const followed = sessionStorage.getItem('channelFollowed');
+                    if (!followed) {
+                        e.preventDefault();
+                        document.getElementById('followModal').style.display = 'flex';
+                    }
+                });
+            }
+        });
+
+        const ownerBox = document.querySelector('.owner-box');
+        if (ownerBox) {
+            ownerBox.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 15;
+                const rotateY = (centerX - x) / 15;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+            });
+
+            ownerBox.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+            });
+        }
+
+        document.querySelectorAll('.action-box').forEach(box => {
+            box.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.05)`;
+            });
+
+            box.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+            });
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'f' || e.key === 'F') {
+                e.preventDefault();
+                openWhatsAppChannel();
+            }
+            if (e.key === 'b' || e.key === 'B') {
+                e.preventDefault();
+                showBotDetails();
+            }
+            if (e.key === 'Escape') {
+                closeModal();
+                closeBotDetails();
+            }
+        });
+
+        console.log('%c👑 QUEEN SEYA XMD', 'color: #ff1493; font-size: 28px; font-weight: bold; text-shadow: 0 0 10px #ff1493;');
+        console.log('%c✨ Royal WhatsApp Bot Experience', 'color: #da70d6; font-size: 18px;');
+        console.log('%c👨‍💻 Created by Pamudina Ravihara', 'color: #ba55d3; font-size: 14px;');
+        console.log('%c🌐 DARK TECH ZONE', 'color: #ff1493; font-size: 14px; font-weight: bold;');
+    </script>
+</body>
+</html>
