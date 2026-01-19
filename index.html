@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen Seya XMD | Official Website</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Orbitron:wght@500;700;900&family=Noto+Sans+Sinhala:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            /* --- OFFICIAL THEME --- */
+            --neon-blue: #00f2ff;
+            --deep-blue: #0066ff;
+            --bg-dark: #020b1c;
+            --bg-card: rgba(5, 18, 40, 0.75);
+            --text-main: #e0f7fa;
+            --glass-border: rgba(0, 242, 255, 0.3);
+            --glow: 0 0 25px rgba(0, 242, 255, 0.35);
+        }
+
+        body.light-mode {
+            --bg-dark: #f0f8ff;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --text-main: #002b36;
+            --glass-border: rgba(0, 102, 255, 0.2);
+            --neon-blue: #0066ff;
+            --deep-blue: #00c3ff;
+            --glow: 0 5px 20px rgba(0, 102, 255, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Outfit', 'Noto Sans Sinhala', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: 
+                linear-gradient(var(--glass-border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+            display: flex; flex-direction: column;
+        }
+
+        /* --- LOADING SCREEN --- */
+        #loader-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #010613; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1s ease-out;
+        }
+        .loader-content { position: relative; width: 120px; height: 120px; display: flex; justify-content: center; align-items: center; }
+        .core { width: 40px; height: 40px; background: var(--neon-blue); border-radius: 50%; box-shadow: 0 0 30px var(--neon-blue); animation: core-pulse 1.5s infinite alternate; z-index: 2; }
+        .ring { position: absolute; border-radius: 50%; border: 2px solid transparent; }
+        .ring-1 { width: 100%; height: 100%; border-top-color: var(--deep-blue); border-bottom-color: var(--deep-blue); animation: spin 2s linear infinite; box-shadow: 0 0 10px rgba(0, 102, 255, 0.5); }
+        .ring-2 { width: 75%; height: 75%; border-left-color: var(--neon-blue); border-right-color: var(--neon-blue); animation: spin-reverse 1.5s linear infinite; }
+        .loading-text { margin-top: 30px; font-family: 'Orbitron'; letter-spacing: 4px; color: var(--neon-blue); font-size: 0.9rem; animation: text-flicker 2s infinite; text-shadow: 0 0 10px var(--neon-blue); }
+        @keyframes core-pulse { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 50px var(--neon-blue); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+        @keyframes text-flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; position: fixed; width: 100%; top: 0; z-index: 1000;
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border);
+            background: rgba(2, 11, 28, 0.8);
+        }
+        .logo { font-family: 'Orbitron'; font-size: 1.5rem; font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); letter-spacing: 1px; }
+        .nav-items { display: flex; gap: 15px; align-items: center; }
+        .circle-btn { width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--glass-border); display: flex; justify-content: center; align-items: center; cursor: pointer; color: var(--neon-blue); background: rgba(255,255,255,0.05); }
+        .circle-btn:hover { background: var(--neon-blue); color: #000; box-shadow: var(--glow); }
+
+        /* --- HERO & NEW BOT LOGO ANIMATION --- */
+        .hero {
+            min-height: 60vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 120px 20px 20px;
+        }
+        
+        /* New Animated Container */
+        .avatar-glow {
+            width: 170px; height: 170px; position: relative;
+            margin-bottom: 30px; display: flex; justify-content: center; align-items: center;
+        }
+        /* Outer rotating ring */
+        .avatar-glow::before {
+            content:''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            border: 2px dashed rgba(0, 242, 255, 0.6); animation: spin 15s linear infinite;
+        }
+        /* Inner counter-rotating ring */
+        .avatar-glow::after {
+            content:''; position: absolute; width: 85%; height: 85%; border-radius: 50%;
+            border: 2px solid transparent; border-top-color: var(--deep-blue); border-bottom-color: var(--neon-blue);
+            animation: spin-reverse 6s linear infinite;
+        }
+        /* The Image itself with new URL and pulsing glow */
+        .avatar-img {
+            width: 135px; height: 135px; border-radius: 50%; z-index: 5;
+            /* NEW IMAGE URL HERE */
+            background: url('https://files.catbox.moe/tzmv47.jpg') center/cover;
+            border: 3px solid var(--neon-blue);
+            animation: logo-pulse 2s infinite alternate;
+        }
+        @keyframes logo-pulse {
+            0% { box-shadow: 0 0 20px var(--neon-blue); }
+            100% { box-shadow: 0 0 50px var(--neon-blue), 0 0 80px rgba(0, 102, 255, 0.6); }
+        }
+
+
+        .hero h1 {
+            font-family: 'Orbitron'; font-size: 3rem; line-height: 1.1; margin-bottom: 10px;
+            background: linear-gradient(to bottom, #fff, var(--neon-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0,242,255,0.5));
+        }
+        .hero p { opacity: 0.8; max-width: 600px; margin-bottom: 20px; font-size: 1.1rem; }
+
+        /* --- FEATURES --- */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px 10%; }
+        .card { background: var(--bg-card); padding: 30px; border: 1px solid var(--glass-border); border-radius: 12px; text-align: center; backdrop-filter: blur(5px); position: relative; overflow: hidden; }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--glow); border-color: var(--neon-blue); }
+        .card i { font-size: 2rem; color: var(--neon-blue); margin-bottom: 15px; }
+        .card h3 { font-family: 'Orbitron'; margin-bottom: 10px; color: #fff; }
+        body.light-mode .card h3 { color: #002b36; }
+
+        /* --- DEVELOPER INFO BOX --- */
+        .info-section { padding: 40px 10% 20px; display: flex; justify-content: center; }
+        .dev-support-box { width: 100%; max-width: 700px; background: linear-gradient(135deg, rgba(6, 22, 45, 0.8), rgba(0, 50, 100, 0.2)); border: 2px solid var(--neon-blue); padding: 25px; border-radius: 15px; text-align: center; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); backdrop-filter: blur(10px); }
+        .dev-support-box:hover { transform: scale(1.02); box-shadow: 0 0 35px rgba(0, 242, 255, 0.3); border-color: #fff; }
+        .pulsate-icon { font-size: 2.2rem; color: var(--neon-blue); margin-bottom: 10px; animation: pulse-icon 2s infinite; display: inline-block; }
+        @keyframes pulse-icon { 0% { transform: scale(1); } 50% { transform: scale(1.1); text-shadow: 0 0 10px var(--neon-blue); } 100% { transform: scale(1); } }
+        .tap-hint { margin-top: 10px; font-size: 0.8rem; color: var(--neon-blue); font-family: 'Orbitron'; letter-spacing: 2px; }
+
+        /* --- CONTROL PANEL --- */
+        .control-panel-section { padding: 20px 10% 40px; display: flex; justify-content: center; }
+        .control-panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 700px; }
+        .panel-box { background: rgba(0, 242, 255, 0.05); border: 1px solid var(--glass-border); padding: 15px 20px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(5px); }
+        .panel-box:hover { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 242, 255, 0.1); }
+        .music-left { display: flex; align-items: center; gap: 15px; }
+        .music-icon-box { width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 242, 255, 0.1); color: var(--neon-blue); display: flex; justify-content: center; align-items: center; font-size: 1.2rem; }
+        .music-details { text-align: left; }
+        .music-label { font-size: 0.7rem; opacity: 0.7; font-family: 'Orbitron'; letter-spacing: 1px; }
+        .music-name { font-size: 0.9rem; font-weight: bold; color: #fff; }
+        .play-btn { background: none; border: 1px solid var(--neon-blue); color: var(--neon-blue); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 0.9rem; }
+        .play-btn:hover { background: var(--neon-blue); color: #000; }
+        .time-left { display: flex; align-items: center; gap: 15px; }
+        .time-icon-box { width: 40px; height: 40px; border-radius: 50%; background: rgba(0, 102, 255, 0.1); color: var(--deep-blue); display: flex; justify-content: center; align-items: center; font-size: 1.2rem; }
+        .time-display { font-family: 'Orbitron'; font-size: 1.1rem; color: #fff; font-weight: bold; }
+        .date-display { font-size: 0.75rem; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* --- BOTTOM BUTTONS --- */
+        .bottom-actions { padding: 10px 20px 60px; text-align: center; display: flex; flex-direction: column; gap: 15px; justify-content: center; align-items: center; }
+        @media(min-width: 600px) { .bottom-actions { flex-direction: row; } }
+        .btn-blue { width: 100%; max-width: 280px; padding: 15px 20px; border-radius: 8px; font-family: 'Orbitron'; font-weight: bold; background: rgba(0, 242, 255, 0.05); border: 1px solid var(--neon-blue); color: var(--neon-blue); text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-blue:hover { background: var(--neon-blue); color: #020b1c; box-shadow: 0 0 30px var(--neon-blue); }
+        .btn-filled { background: var(--neon-blue); color: #020b1c; border: none; }
+
+        /* --- FOOTER --- */
+        footer { background: #000; border-top: 1px solid var(--glass-border); padding: 40px 20px; text-align: center; margin-top: auto; }
+        .footer-content h2 { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--neon-blue); margin-bottom: 5px; }
+        .dev-name { font-weight: 700; color: #fff; }
+        body.light-mode .dev-name { color: #000; }
+
+        /* --- MODALS --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(12px); padding: 20px; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .big-alert { background: rgba(5, 15, 35, 0.95); width: 100%; max-width: 500px; padding: 30px; border-radius: 15px; border: 1px solid var(--neon-blue); text-align: center; position: relative; box-shadow: 0 0 60px rgba(0, 242, 255, 0.2); transform: scale(0.8); transition: 0.4s; max-height: 90vh; overflow-y: auto; }
+        .modal-overlay.active .big-alert { transform: scale(1); }
+        .support-text-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: left; font-size: 0.9rem; line-height: 1.6; border-left: 3px solid var(--neon-blue); }
+        .btn-interview { display: block; width: 100%; padding: 14px; background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); color: white; font-family: 'Orbitron'; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 10px; text-decoration: none; }
+        .btn-back { display: block; width: 100%; padding: 14px; background: transparent; border: 1px solid #ff4757; color: #ff4757; font-family: 'Orbitron'; font-weight: bold; border-radius: 6px; cursor: pointer; }
+        .btn-back:hover { background: #ff4757; color: white; box-shadow: 0 0 15px #ff4757; }
+        .close-modal { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.1); color: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .close-modal:hover { background: #ff4757; transform: rotate(90deg); }
+        .alert-btn { display: block; width: 100%; padding: 14px; background: linear-gradient(90deg, #25D366, #128C7E); color: white; font-family: 'Orbitron'; text-decoration: none; border-radius: 6px; margin-top: 15px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="core"></div>
+        </div>
+        <div class="loading-text">INITIALIZING...</div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="https://files.catbox.moe/w8hkta.mp3" type="audio/mpeg">
+    </audio>
+
+    <nav>
+        <div class="logo">QUEEN SEYA</div>
+        <div class="nav-items">
+            <div class="circle-btn" onclick="toggleLang()"><i class="fas fa-globe"></i></div>
+            <div class="circle-btn" onclick="toggleTheme()"><i class="fas fa-adjust"></i></div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="avatar-glow" data-aos="zoom-in">
+            <div class="avatar-img"></div>
+        </div>
+        <h1 data-aos="fade-up">QUEEN SEYA XMD</h1>
+        <p data-aos="fade-up" data-aos-delay="100" id="hero-txt">
+            Experience the Blue Energy. The most advanced WhatsApp Bot in 2026.
+        </p>
+    </section>
+
+    <section class="features">
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-bolt"></i>
+            <h3 id="h1">Ultra Speed</h3>
+            <p id="p1">Blue lightning speed for every command.</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="300">
+            <i class="fas fa-shield-virus"></i>
+            <h3 id="h2">Cyber Security</h3>
+            <p id="p2">Protected by military-grade encryption.</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="400">
+            <i class="fas fa-brain"></i>
+            <h3 id="h3">AI Core</h3>
+            <p id="p3">Next-gen Artificial Intelligence integration.</p>
+        </div>
+    </section>
+
+    <section class="info-section" data-aos="fade-up" data-aos-delay="500">
+        <div class="dev-support-box" onclick="openSupportModal()">
+            <i class="fas fa-users-cog pulsate-icon"></i>
+            <h3>Developer Support Team Info</h3>
+            <p>Learn about the creators & Join our community</p>
+            <div class="tap-hint">
+                <i class="fas fa-fingerprint"></i> TAP TO ACCESS DATABASE
+            </div>
+        </div>
+    </section>
+
+    <section class="control-panel-section" data-aos="fade-up" data-aos-delay="550">
+        <div class="control-panel-grid">
+            
+            <div class="panel-box">
+                <div class="music-left">
+                    <div class="music-icon-box">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="music-details">
+                        <div class="music-label">NOW PLAYING</div>
+                        <div class="music-name">Queen Seya Theme</div>
+                    </div>
+                </div>
+                <button class="play-btn" onclick="toggleMusic()">
+                    <i class="fas fa-play" id="play-icon"></i>
+                </button>
+            </div>
+
+            <div class="panel-box">
+                <div class="time-left">
+                    <div class="time-icon-box">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <div class="time-display" id="digital-time">00:00:00</div>
+                        <div class="date-display" id="digital-date">LOADING...</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bottom-actions" data-aos="fade-up" data-aos-delay="600">
+        <a href="https://seya-mini-afeabe8ee8b3.herokuapp.com/" class="btn-blue btn-filled" id="btn-1">
+            <i class="fas fa-qrcode"></i> PAIR CODE
+        </a>
+        <a href="https://whatsapp.com/channel/0029VbBgQLO2ZjClTBWN3s1C" class="btn-blue" id="btn-2">
+            <i class="fab fa-whatsapp"></i> CHANNEL
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h2>QUEEN SEYA XMD 2026</h2>
+            <p class="dev-info">
+                <span id="txt-dev">Developed by</span> <span class="dev-name">PAMUDINA RAVIHARA</span>
+            </p>
+            <div style="font-family: 'Orbitron'; font-size: 0.8rem; color: var(--deep-blue); margin-top: 15px; letter-spacing: 1.5px;">
+                POWERED BY DARK TECH ZONE
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="alert-modal">
+        <div class="big-alert">
+            <div class="close-modal" onclick="closeModal('alert-modal')"><i class="fas fa-times"></i></div>
+            <div style="width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 50%; border: 3px solid var(--neon-blue); display: flex; justify-content: center; align-items: center; box-shadow: inset 0 0 20px var(--neon-blue);">
+                <i class="fab fa-whatsapp" style="font-size: 3rem; color: #25D366; text-shadow: 0 0 15px #25D366;"></i>
+            </div>
+            
+            <h3 style="font-family: 'Orbitron'; margin-bottom: 5px; font-size: 1.4rem;">Update Available!</h3>
+            <h4 style="font-family: 'Noto Sans Sinhala'; color: var(--neon-blue); font-size: 1.1rem; margin-bottom: 20px;">අලුත් අප්ඩේට් එකක්!</h4>
+            
+            <div style="opacity: 0.9; font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
+                <p style="margin-bottom: 10px;">Don't miss the latest features of Queen Seya XMD. Join our official channel now.</p>
+                <p style="font-family: 'Noto Sans Sinhala'; color: #d0d0d0;">Queen Seya XMD හි අලුත්ම විශේෂාංග අත්විඳින්න අපේ චැනල් එකට එන්න.</p>
+            </div>
+            
+            <a href="https://whatsapp.com/channel/0029VbBgQLO2ZjClTBWN3s1C" class="alert-btn">
+                JOIN CHANNEL NOW <br> <span style="font-size:0.9rem; font-family:'Noto Sans Sinhala';">දැන්ම එකතු වන්න</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="support-modal">
+        <div class="big-alert support-content">
+            <div class="close-modal" onclick="closeModal('support-modal')"><i class="fas fa-times"></i></div>
+            
+            <h2 style="font-family: 'Orbitron'; color: var(--neon-blue); font-size: 1.3rem; margin-bottom: 25px; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px;">
+                ~:|𝗧ʜᴇ 𝗗ᴀʀᴋ 𝗧ᴇᴄʜ 𝗭ꪮɴᴇ 𝗜ɴᴛᴇʀᴠɪᴇ𝗪|:🎓🪽~
+            </h2>
+            
+            <div class="support-text-box">
+                <p style="margin-bottom: 15px;">
+                    <strong>[ 𝘐 𝘯 𝘵 𝘦 𝘳 𝘥 𝘶 𝘤 𝘵 𝘪 𝘰 𝘯 ]</strong><br><br>
+                    (ᴅᴀʀᴋ ᴛᴇᴄʜ ᴢᴏɴᴇ) 𝟸𝟶𝟸𝟹 𝘊𝘳𝘦𝘢𝘵𝘦 කල 𝘊𝘺𝘣𝘦𝘳 𝘚𝘦𝘲𝘶𝘢𝘳𝘪𝘵𝘺 / 𝘗𝘳𝘰𝘨𝘳𝘢𝘮𝘮𝘪𝘯𝘨 /𝘊𝘰𝘥𝘪𝘯𝘨 / 𝘖𝘵𝘩𝘦𝘳 𝘚𝘬𝘪𝘭𝘭𝘴 දියුණු කිරීමට සහ හැකියාවන් නිර්මාණය කිරීමට ආරම්භ කරන ලද්දකි..! ~🧠:🗣️~
+                </p>
+                <p>
+                    (Dark Tech Zone) was created in 2023 with the aim of developing Cyber Security, Programming, Coding, and other skills, and to build new capabilities..! ~🧠:🗣️~
+                </p>
+            </div>
+
+            <div style="font-family: 'Orbitron'; font-size: 0.85rem; color: var(--deep-blue); margin-bottom: 30px; letter-spacing: 1px;">
+                ~:_| 𝘊𝘳𝘦𝘢𝘵𝘦 𝘉𝘺 : 𝟸𝟶𝟸𝟹 - |_:~🎓<br>
+                @ _[ ᴩᴏᴡᴇʀᴅ ʙʏ: ᴅ:ᴀ:ʀ:ᴋ-ᴛ:ᴇ:ᴄ:ʜ-ᴢ:ᴏ:ɴ:ᴇ]_~🎓:🗣️~
+            </div>
+
+            <a href="https://chat.whatsapp.com/BCKiRBat2IPLVvm7xlD0wo" class="btn-interview">
+                <i class="fas fa-users"></i> JOIN OUR INTERVIEW GROUP
+            </a>
+            
+            <button class="btn-back" onclick="closeModal('support-modal')">
+                <i class="fas fa-arrow-left"></i> BACK
+            </button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // 1. Loading Effect & Music Auto Play
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 1000);
+            }, 2500); 
+
+            // Auto Play Logic
+            const audio = document.getElementById('bg-music');
+            const playIcon = document.getElementById('play-icon');
+            audio.volume = 0.4;
+            
+            const promise = audio.play();
+            if(promise !== undefined) {
+                promise.then(_ => {
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                }).catch(error => {
+                    document.body.addEventListener('click', () => {
+                        audio.play();
+                        playIcon.classList.remove('fa-play');
+                        playIcon.classList.add('fa-pause');
+                    }, { once: true });
+                });
+            }
+        });
+
+        // 2. Music Toggle
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const playIcon = document.getElementById('play-icon');
+            
+            if (audio.paused) {
+                audio.play();
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+            } else {
+                audio.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+            }
+        }
+
+        // 3. Date & Time
+        setInterval(() => {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour12: false });
+            const date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
+            
+            document.getElementById('digital-time').innerText = time;
+            document.getElementById('digital-date').innerText = date;
+        }, 1000);
+
+        // 4. Modals
+        function openSupportModal() {
+            document.getElementById('support-modal').classList.add('active');
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Alert
+        setTimeout(() => {
+            document.getElementById('alert-modal').classList.add('active');
+        }, 4000); 
+
+        // 5. Theme
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // 6. Language
+        let isEn = true;
+        const dict = {
+            en: {
+                hero: "Experience the Blue Energy. The most advanced WhatsApp Bot in 2026.",
+                b1: "PAIR CODE", b2: "CHANNEL",
+                h1: "Ultra Speed", p1: "Blue lightning speed for every command.",
+                h2: "Cyber Security", p2: "Protected by military-grade encryption.",
+                h3: "AI Core", p3: "Next-gen Artificial Intelligence integration.",
+                dev: "Developed by"
+            },
+            si: {
+                hero: "2026 වසරේ දියුණුතම තාක්ෂණය සමගින් පැමිණෙන නිල් බලඇණිය.",
+                b1: "පෙයා කෝඩ්", b2: "චැනල් එක",
+                h1: "අධි වේගය", p1: "විදුලි වේගයෙන් ප්‍රතිචාර දක්වයි.",
+                h2: "ආරක්ෂාව", p2: "ඉහළම මට්ටමේ ආරක්ෂාව.",
+                h3: "AI මොළය", p3: "කෘතිම බුද්ධියෙන් බල ගැන්වේ.",
+                dev: "නිර්මාණය"
+            }
+        };
+
+        function toggleLang() {
+            isEn = !isEn;
+            const t = isEn ? dict.en : dict.si;
+            
+            document.getElementById('hero-txt').innerText = t.hero;
+            document.getElementById('btn-1').innerHTML = `<i class="fas fa-qrcode"></i> ${t.b1}`;
+            document.getElementById('btn-2').innerHTML = `<i class="fab fa-whatsapp"></i> ${t.b2}`;
+            document.getElementById('h1').innerText = t.h1; document.getElementById('p1').innerText = t.p1;
+            document.getElementById('h2').innerText = t.h2; document.getElementById('p2').innerText = t.p2;
+            document.getElementById('h3').innerText = t.h3; document.getElementById('p3').innerText = t.p3;
+            document.getElementById('txt-dev').innerText = t.dev;
+        }
+    </script>
+</body>
+</html>
